@@ -1,0 +1,20 @@
+<% layout('layouts/boilerplate') %>
+<div class="row">
+    <div class="col-10 offset-1">
+        <h1>LOGIN</h1>
+        <form action="/login" method="post" class="validated-form mb-2" novalidate>
+            <div class="mb-3">
+                <!-- Match the label with the id of input -->
+                <label class="form-label" for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            <div class="mb-3">
+                <!-- Match the label with the id of input -->
+                <label class="form-label" for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <button class="btn btn-success col-12">Join</button>
+        </form>
+        <a href="/register">Don't have an account? Sign Up Here!</a>
+    </div>
+</div>
