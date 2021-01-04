@@ -1,48 +1,31 @@
-const express = require('express');
-const router = express.Router();
-const catchAsync = require('../utils/catchAsync');
-const Campground = require('../models/campground');
-const campgrounds = require('../controllers/campgrounds');
-const { isLoggedIn, validateCampground, isCampUser} = require('../middleware');
+const express                                 = require('express'),
+router                                        = express.Router(),
+Campground                                    = require('../models/campground'),
+campgrounds                                   = require('../controllers/campgrounds'),
+catchAsync                                    = require('../utils/catchAsync'),
+{ isLoggedIn, validateCampground, isCampUser} = require('../middleware');
 
-// This file is a means to separate the routes for cleaner code
+// NEED ASYNC WHEN IT IS FINDING DATA
+// catchAsync is watching for throws - it will catch the error and send it to the error handler middleware in the index
 
-
-// *****************
-// ***CAMPGROUNDS***
-// *****************
-
+router.route('/')
 // READ - (ALL)
-// NEED ASYNC BECAUSE IT IS FINDING DATA
-router.get('/', catchAsync(campgrounds.index));
+.get(catchAsync(campgrounds.index))
+// CREATE
+.post(isLoggedIn, validateCampground, catchAsync(campgrounds.postNew))
 
-// Gets the form to create
+// Gets the form to CREATE
 router.get('/new', isLoggedIn, campgrounds.renderNew);
 
-// CREATE
-// When the user presses the button to add a campground, it routes here because it is a post route
-// NEED ASYNC BECAUSE IT IS FINDING DATA
-// catchAsync is watching for throws - it will catch this error and send it to the error handler middleware
-router.post('/', isLoggedIn, validateCampground, catchAsync(campgrounds.postNew));
-
+router.route('/:id')
 // Read - (SINGLE)
-// NEED ASYNC BECAUSE IT IS FINDING DATA
-router.get('/:id', catchAsync(campgrounds.readSingle));
+.get(catchAsync(campgrounds.readSingle))
+// UPDATE
+.put(isLoggedIn, isCampUser, validateCampground, catchAsync(campgrounds.update))
+// DELETE
+.delete(isLoggedIn, isCampUser, catchAsync(campgrounds.delete))
 
 // Gets the form to edit
-// NEED ASYNC BECAUSE IT IS FINDING DATA
 router.get('/:id/edit', isLoggedIn, isCampUser, catchAsync(campgrounds.renderEdit));
-
-// UPDATE
-// NEED ASYNC BECAUSE IT IS FINDING DATA
-router.put('/:id', isLoggedIn, isCampUser, validateCampground, catchAsync(campgrounds.update));
-
-// DELETE
-// NEED ASYNC BECAUSE IT IS FINDING DATA
-router.delete('/:id', isLoggedIn, isCampUser, catchAsync(campgrounds.delete));
-
-// *****************
-// *CAMPGROUNDS END*
-// *****************
 
 module.exports = router;

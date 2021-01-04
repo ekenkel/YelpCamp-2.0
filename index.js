@@ -1,21 +1,20 @@
-const express = require('express');
-const path = require('path');
-const methodOverride = require('method-override');
-const ejsMate = require('ejs-mate');
-const session = require('express-session');
-const flash = require('connect-flash');
-const passport = require('passport');
-const LocalStrategy = require('passport-local');
+const express    = require('express'),
+path             = require('path'),
+methodOverride   = require('method-override'),
+ejsMate          = require('ejs-mate'),
+session          = require('express-session'),
+passport         = require('passport'),
+LocalStrategy    = require('passport-local'),
+flash            = require('connect-flash'),
 
-const ExpressError = require('./utils/ExpressError');
-const mongoose = require('mongoose');
-const User = require('./models/user');
+ExpressError     = require('./utils/ExpressError'),
+mongoose         = require('mongoose'),
+User             = require('./models/user'),
 
-const campgroundRoutes = require('./routes/campgroundRoutes');
-const reviewRoutes = require('./routes/reviewRoutes');
-const userRoutes = require('./routes/userRoutes');
-
-const app = express();
+campgroundRoutes = require('./routes/campgroundRoutes'),
+reviewRoutes     = require('./routes/reviewRoutes'),
+userRoutes       = require('./routes/userRoutes'),
+app              = express();
 
 // **************************
 // *****MONGOOSE/MONGODB*****
@@ -34,9 +33,9 @@ db.once("open", () => {
     console.log("Database connected");
 });
 
-// **************************
-// IDK IF KEEPING
-// **************************
+// *************
+// ***SESSION***
+// *************
 
 const sessionConfig = {
     secret: 'faq3fwlerspgipojxnvq34ur3j25i',
@@ -104,12 +103,12 @@ app.set('views', path.join(__dirname, 'views'));
 // Used for updating routes
 app.use(methodOverride('_method'));
 app.use(express.urlencoded({extended:true}));
-// This is used to serve that directory
+// This is used to serve the public directory
 app.use(express.static(path.join(__dirname, 'public')));
 
 
 // **************
-// ****Routes****
+// ****ROUTES****
 // **************
 
 app.use('/campgrounds', campgroundRoutes);

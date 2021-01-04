@@ -1,5 +1,5 @@
 //  This script comes from bootstrap, needed for basic error handling on new/edit requests
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
+// Example starter JavaScript for disabling form submissions if there are invalid fields
 (function () {
   'use strict'
 

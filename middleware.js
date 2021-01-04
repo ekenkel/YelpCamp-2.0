@@ -1,7 +1,7 @@
-const { campgroundSchema, reviewSchema} = require('./schemas.js');
-const Campground = require('./models/campground');
-const Review = require('./models/review');
-const ExpressError = require('./utils/ExpressError');
+const { campgroundSchema, reviewSchema} = require('./schemas.js'),
+Campground                              = require('./models/campground'),
+Review                                  = require('./models/review'),
+ExpressError                            = require('./utils/ExpressError');
 
 // Passport adds a user to the req. ie: req.user
 module.exports.isLoggedIn = (req, res, next) => {

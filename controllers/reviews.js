@@ -1,5 +1,5 @@
-const Campground = require('../models/campground');
-const Review = require('../models/review');
+const Campground = require('../models/campground'),
+Review           = require('../models/review');
 
 module.exports.new = async(req, res) => {
     // Gets the campground on which the review was written
