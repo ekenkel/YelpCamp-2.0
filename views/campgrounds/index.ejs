@@ -1,4 +1,7 @@
 <% layout('layouts/boilerplate') %>
+
+<div id="clusterMap" class="mb-3"></div>
+
 <div class="d-flex flex-row justify-content-between my-1">
     <h1 class="flex-item">All Campgrounds</h1>
     <div>
@@ -13,11 +16,25 @@
         <!-- Each Camp takes up an entire row -->
         <!-- 4/12 of the units are for the image -->
         <div class="col-md-4">
-            <img class="img-fluid" alt="" src="<%= campground.image %>">
+            <% if (campground.images.length) { %> 
+                <img class="img-fluid" alt="" src="<%= campground.images[0].url %>">
+                <!-- <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <% campground.images.forEach((image, i) => { %>
+                                <div class="carousel-item <%= i === 0 ? 'active' : ''%>">
+                                <img src="<%= image.url  %>" class="d-block w-100" alt="...">
+                                </div>
+                                <% }) %>
+                        </div>
+                    </div> -->
+            <% } else { %>
+                <img class="img-fluid" alt="" src="https://res.cloudinary.com/dz5k5z7x3/image/upload/v1609876706/YelpCamp/DEFAULT_CAMP_hwbukv.jpg">
+            <% } %>  
         </div>
         <!-- 8/12 of the units are for the rest of the details -->
         <div class="col-md-8">
             <h5 class="card-title"><%= campground.title %></h5>
+            <h5 class="card-title"><%= campground.properties.popUpMarkup %></h5>
             <p class="card-text">
                 <small class="text-muted"><%= campground.location %> </small>
             </p>
@@ -27,3 +44,10 @@
     </div>
 </div>
 <% } %> 
+
+<script>
+    const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
+    const campgrounds = {features: <%- JSON.stringify(campgrounds) %>};
+</script>
+
+<script src="/javascript/clusterMap.js"></script>

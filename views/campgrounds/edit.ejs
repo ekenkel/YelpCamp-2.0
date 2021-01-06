@@ -1,19 +1,14 @@
 <% layout('layouts/boilerplate') %>
+<link rel="stylesheet" href="/stylesheets/imageSelect.css">
 <div class="row">
     <h1 class="text-center">Edit Campground</h1>
     <div class="col-6 offset-3">
-        <form action="/campgrounds/<%=campground._id%>?_method=PUT" method="POST" novalidate class="validated-form">
+        <form action="/campgrounds/<%=campground._id%>?_method=PUT" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
             <div class="mb-3">
                 <!-- Match the label with the id of input -->
                 <label class="form-label" for="title">Title</label>
                 <!-- everything in the request app will be under the req.campground... -->
                 <input type="text" class="form-control" id="title" value="<%= campground.title %>" name="campground[title]" required>
-            </div>
-            <div class="mb-3">
-                <!-- Match the label with the id of input -->
-                <label class="form-label" for="image">Image</label>
-                <!-- everything in the request app will be under the req.campground... -->
-                <input type="text" class="form-control" id="image" value="<%= campground.image %>" name="campground[image]" required>
             </div>
             <div class="mb-3">
                 <!-- Match the label with the id of input -->
@@ -25,14 +20,38 @@
                 <!-- Match the label with the id of input -->
                 <label class="form-label" for="description">Description</label>
                 <!-- everything in the request app will be under the req.campground... -->
-                <textarea type="text" class="form-control" id="description" name="campground[description]" required><%= campground.description %></textarea>
+                <textarea type="text" class="form-control" id="description" name="campground[description]" style="height: 150px;" required><%= campground.description %></textarea>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="price">Price</label>
                 <div class="input-group">
                     <span class="input-group-text" id="price-label">$</span>
                     <input type="text" class="form-control" id="price" placeholder="0.00" aria-label="Username" aria-describedby="price-label" name="campground[price]" required value="<%= campground.price %>">
-                </div>
+                </div >
+            </div>
+
+            <label for="file" class="form-label">Add Image(s)</label>
+            <div class="form-file mb-3 custom-file" id="file">
+                <input class="form-file-input " type="file" id="image" name="images" multiple>
+                <label for="image" class="form-file-label">
+                    <span class="form-file-text custom-file-label">Choose file(s)</span>
+                    <span class="form-file-button">Browse</span>
+                </label>
+            </div>
+
+            <label for="imageArea" class="form-label">Edit Current Image(s)</label>
+            <p class="text-muted" style="font-size: 0.7em;">*Click to Delete</p>
+            <div class="col-11 offset-1 mb-3" id="imageArea">
+                <ul>
+                    <% campground.images.forEach(function(img, i) { %>
+                        <li>
+                            <input type="checkbox" id="image-<%= i %>" name="deleteImages[]" value="<%= img.filename %>">
+                            <label for="image-<%= i %>" id="imageSelect">
+                                <img src="<%= img.thumbnail %>" id="imageSelection">
+                            </label>
+                        </li>
+                    <% }) %> 
+                </ul>
             </div>
             <button class="btn btn-primary mb-3">Update Campground</button>
         </form>

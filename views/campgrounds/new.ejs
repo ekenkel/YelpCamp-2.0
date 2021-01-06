@@ -2,19 +2,24 @@
 <div class="row">
     <h1 class="text-center">New Campground</h1>
     <div class="col-6 offset-3">
-        <form action="/campgrounds" method="POST" novalidate class="validated-form">
+        <form action="/campgrounds" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
             <div class="mb-3">
                 <!-- Match the label with the id of input -->
                 <label class="form-label" for="title">Title</label>
                 <!-- everything in the request app will be under the req.campground... -->
                 <input type="text" class="form-control" id="title" name="campground[title]">
             </div>
-            <div class="mb-3">
-                <!-- Match the label with the id of input -->
-                <label class="form-label" for="image">Image</label>
-                <!-- everything in the request app will be under the req.campground... -->
-                <input type="text" class="form-control" id="image" name="campground[image]" required>
+
+            <label for="file" class="form-label">Image(s)</label>
+            <div class="form-file mb-3 custom-file" id="file">
+                <input class="form-file-input " type="file" id="image" name="images" multiple>
+                <label for="image" class="form-file-label">
+                    <span class="form-file-text custom-file-label">Choose files</span>
+                    <span class="form-file-button">Browse</span>
+                </label>
             </div>
+
+
             <div class="mb-3">
                 <!-- Match the label with the id of input -->
                 <label class="form-label" for="location">Location</label>
@@ -25,7 +30,7 @@
                 <!-- Match the label with the id of input -->
                 <label class="form-label" for="description">Description</label>
                 <!-- everything in the request app will be under the req.campground... -->
-                <textarea type="text" class="form-control" id="description" name="campground[description]" required></textarea>
+                <textarea type="text" class="form-control" id="description" name="campground[description]" style="height: 150px;" required></textarea>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="price">Price</label>
